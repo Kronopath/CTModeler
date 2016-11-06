@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
+using System.Collections;
 
 namespace CT {
     
@@ -19,19 +19,18 @@ namespace CT {
 
         protected abstract Mesh CreateMesh();
 
-        // TODO: is this correct?
         protected int[] GenerateTriangleStripIndices(int numTris) {
-            int[] tris = new int[numTris*3];
-            for (int i = 0; i < numTris; i++) {
-                if (i % 2 == 0) {
-                    tris[i*3] = i;
-                    tris[i*3+1] = i+1;
-                    tris[i*3+2] = i+2;
+            int[] tris = new int[numTris * 3];
+            for(int i = 0; i < numTris; i++) {
+                if(i % 2 == 0) {
+                    tris[i * 3] = i;
+                    tris[i * 3 + 1] = i + 1;
+                    tris[i * 3 + 2] = i + 2;
                 }
                 else {
-                    tris[i*3] = i+1;
-                    tris[i*3+1] = i;
-                    tris[i*3+2] = i+2;
+                    tris[i * 3] = i + 1;
+                    tris[i * 3 + 1] = i;
+                    tris[i * 3 + 2] = i + 2;
                 }
             }
             return tris;
