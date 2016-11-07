@@ -345,6 +345,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numU: 30
   numV: 30
+  amountToCutOff: 0.191
 --- !u!33 &963629360
 MeshFilter:
   m_ObjectHideFlags: 0
