@@ -38,7 +38,7 @@ namespace CT {
 
                 Vector3 uTangent = (pu - nu).normalized;
                 Vector3 vTangent = (pv - nv).normalized;
-                Vector3 normal = Vector3.Cross(uTangent, vTangent);
+                Vector3 normal = Vector3.Cross(vTangent, uTangent);
 
                 tangents[currVertIndex] = uTangent;
                 normals[currVertIndex] = normal;
