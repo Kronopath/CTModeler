@@ -8,7 +8,7 @@ namespace CT {
 
         protected abstract Vector3 ExtrusionPathFunction(float v);
 
-        protected override Vector3 ParametricFunction(float u, float v) {
+        protected sealed override Vector3 ParametricFunction(float u, float v) {
             Vector2 xy = ExtrusionProfileFunction(u, v);
             Vector3 path = ExtrusionPathFunction(v);
             Vector3 path2 = ExtrusionPathFunction(v + 0.001f);

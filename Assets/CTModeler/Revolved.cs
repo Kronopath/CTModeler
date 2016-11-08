@@ -6,7 +6,7 @@ namespace CT {
 
         protected abstract Vector2 RevolutionFunction(float t);
 
-        protected override Vector3 ParametricFunction(float u, float v) {
+        protected sealed override Vector3 ParametricFunction(float u, float v) {
             float theta = 2 * Mathf.PI * -u;
             Vector2 xz = RevolutionFunction(v);
             return new Vector3(xz.x * Mathf.Cos(theta),
