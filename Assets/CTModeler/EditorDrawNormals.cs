@@ -19,7 +19,7 @@ namespace CT {
                 for(int i = 0; i < meshFilter.mesh.vertices.Length; i++) {
                     Vector3 vertexPos = transform.TransformPoint(meshFilter.mesh.vertices[i]);
                     Gizmos.DrawLine(vertexPos,
-                                vertexPos + meshFilter.mesh.normals[i]);
+                                    vertexPos + transform.TransformVector(meshFilter.mesh.normals[i]));
                 }
             }
     }
