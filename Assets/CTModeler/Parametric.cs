@@ -28,18 +28,12 @@ namespace CT {
 
             Action<float, float> addVertex = (float inU, float inV) => {
                 // Compute parametric vertex
-                vertices[currVertIndex] = f(Mathf.Clamp01(inU), Mathf.Clamp(inV, 0f, 0.999f));
+                vertices[currVertIndex] = f(Mathf.Clamp01(inU), Mathf.Clamp01(inV));
 
-                // Approximate tangents via finite differencing
-                Vector3 pu = f(inU + divU / 200, inV);
-                Vector3 nu = f(inU - divU / 200, inV);
-                Vector3 pv = f(inU, inV + divV / 200);
-                Vector3 nv = f(inU, inV - divV / 200);
-
-                Vector3 uTangent = (pu - nu).normalized;
-                Vector3 vTangent = (pv - nv).normalized;
-
-                Vector3 normal = Vector3.Cross(vTangent, uTangent).normalized;
+                Vector3 uTangent = Vector3.zero;
+                Vector3 vTangent = Vector3.zero;
+                Vector3 normal = Vector3.zero;
+                GetNormalAndTangents(f, inU, inV, divU, divV, out uTangent, out vTangent, out normal);
 
                 if(normal == Vector3.zero) {
                     // We're likely at a singularity or pole in the model. 
@@ -92,32 +86,37 @@ namespace CT {
                 new Vector2(Mathf.Clamp01(inU - divU / 100), Mathf.Clamp01(inV + divV / 100))
             };
 
-            Debug.Log(gameObject.name + ": Singularity at (" + inU + ", " + inV + ")");
-            Debug.Log(gameObject.name + ": Divisions are (" + divU + ", " + divV + ")");
-            Debug.Log(gameObject.name + ": Nearby points are:");
-            foreach (Vector2 point in nearbyPoints) {
-                Debug.Log(point.ToString("N6"));
-            }
-
             Vector3 averageNormal = Vector3.zero;
             for(int i = 0; i < nearbyPoints.Length; i++) {
                 float currU = nearbyPoints[i].x;
                 float currV = nearbyPoints[i].y;
 
-                Vector3 pu = f(currU + divU / 200, currV);
-                Vector3 nu = f(currU - divU / 200, currV);
-                Vector3 pv = f(currU, currV + divV / 200);
-                Vector3 nv = f(currU, currV - divV / 200);
+                Vector3 uTangent = Vector3.zero;
+                Vector3 vTangent = Vector3.zero;
+                Vector3 normal = Vector3.zero;
+                GetNormalAndTangents(f, currU, currV, divU, divV, out uTangent, out vTangent,
+                                     out normal);
 
-                Vector3 uTangent = (pu - nu).normalized;
-                Vector3 vTangent = (pv - nv).normalized;
-
-                Vector3 normal = Vector3.Cross(vTangent, uTangent).normalized;
                 averageNormal = averageNormal * i / (i + 1) + normal / (i + 1);
             }
 
-            Debug.Log(gameObject.name + ": Avg is " + averageNormal.ToString("N6"));
             return averageNormal.normalized;
+        }
+
+        private void GetNormalAndTangents(Func<float, float, Vector3> f,
+                                          float inU, float inV, float divU, float divV,
+                                          out Vector3 uTangent, out Vector3 vTangent,
+                                          out Vector3 normal)
+        {
+            // Approximate tangents via finite differencing
+            Vector3 pu = f(inU + divU / 200, inV);
+            Vector3 nu = f(inU - divU / 200, inV);
+            Vector3 pv = f(inU, inV + divV / 200);
+            Vector3 nv = f(inU, inV - divV / 200);
+
+            uTangent = (pu - nu).normalized;
+            vTangent = (pv - nv).normalized;
+            normal = Vector3.Cross(vTangent, uTangent).normalized;
         }
     }
 }
