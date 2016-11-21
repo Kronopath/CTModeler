@@ -36,27 +36,14 @@ namespace CT {
                 Vector3 pv = f(inU, inV + divV / 200);
                 Vector3 nv = f(inU, inV - divV / 200);
 
-                // If either of the tangents are zero, that means we're at a singularity in the mesh.
-                // This would lead to a zero vector as our normal if left as-is.
-                // So, instead, take the tangent that's zero and replace it by another tangent along
-                // the other parametric axis that's a quarter of the way around the singularity.
-                if(pu == nu) {
-                    pu = f((inU + 0.25f) % 1.0f, inV + divV / 200);
-                    nu = f((inU + 0.25f) % 1.0f, inV - divV / 200);
-                }
-                if(pv == nv) {
-                    pv = f(inU + divU / 200, (inV + 0.25f) % 1.0f);
-                    nv = f(inU - divU / 200, (inV + 0.25f) % 1.0f);
-                }
-                // If they're both zero, then god help you, you're trying to model a black hole.
-                // Good luck with that.
-
                 Vector3 uTangent = (pu - nu).normalized;
                 Vector3 vTangent = (pv - nv).normalized;
 
                 Vector3 normal = Vector3.Cross(vTangent, uTangent).normalized;
+
                 if(normal == Vector3.zero) {
-                    Debug.LogError("Zero normal for " + this.gameObject.name + " at (" + inU + ", " + inV + "), tangents " + uTangent + ", " + vTangent);
+                    // We're likely at a singularity or pole in the model. 
+                    normal = GetNormalAtSingularity(f, inU, inV, divU, divV);
                 }
 
                 tangents[currVertIndex] = uTangent;
@@ -92,6 +79,45 @@ namespace CT {
             mesh.triangles = triangles;
 
             return mesh;
+        }
+
+        private Vector3 GetNormalAtSingularity(Func<float, float, Vector3> f,
+                                               float inU, float inV, float divU, float divV)
+        {
+            // Take the normal at four different points nearby this vertex, then average them.
+            Vector2[] nearbyPoints = {
+                new Vector2(Mathf.Clamp01(inU + divU / 100), Mathf.Clamp01(inV + divV / 100)),
+                new Vector2(Mathf.Clamp01(inU + divU / 100), Mathf.Clamp01(inV - divV / 100)),
+                new Vector2(Mathf.Clamp01(inU - divU / 100), Mathf.Clamp01(inV - divV / 100)),
+                new Vector2(Mathf.Clamp01(inU - divU / 100), Mathf.Clamp01(inV + divV / 100))
+            };
+
+            Debug.Log(gameObject.name + ": Singularity at (" + inU + ", " + inV + ")");
+            Debug.Log(gameObject.name + ": Divisions are (" + divU + ", " + divV + ")");
+            Debug.Log(gameObject.name + ": Nearby points are:");
+            foreach (Vector2 point in nearbyPoints) {
+                Debug.Log(point.ToString("N6"));
+            }
+
+            Vector3 averageNormal = Vector3.zero;
+            for(int i = 0; i < nearbyPoints.Length; i++) {
+                float currU = nearbyPoints[i].x;
+                float currV = nearbyPoints[i].y;
+
+                Vector3 pu = f(currU + divU / 200, currV);
+                Vector3 nu = f(currU - divU / 200, currV);
+                Vector3 pv = f(currU, currV + divV / 200);
+                Vector3 nv = f(currU, currV - divV / 200);
+
+                Vector3 uTangent = (pu - nu).normalized;
+                Vector3 vTangent = (pv - nv).normalized;
+
+                Vector3 normal = Vector3.Cross(vTangent, uTangent).normalized;
+                averageNormal = averageNormal * i / (i + 1) + normal / (i + 1);
+            }
+
+            Debug.Log(gameObject.name + ": Avg is " + averageNormal.ToString("N6"));
+            return averageNormal.normalized;
         }
     }
 }
