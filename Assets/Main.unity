@@ -164,6 +164,7 @@ GameObject:
   - 23: {fileID: 257192598}
   - 33: {fileID: 257192597}
   - 114: {fileID: 257192596}
+  - 114: {fileID: 257192600}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -233,6 +234,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
+--- !u!114 &257192600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 257192595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793f47cd60e514b8ba3d122a9d214f47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &596717568
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,6 +256,7 @@ GameObject:
   - 23: {fileID: 596717571}
   - 33: {fileID: 596717570}
   - 114: {fileID: 596717569}
+  - 114: {fileID: 596717573}
   m_Layer: 0
   m_Name: OpenCylinder
   m_TagString: Untagged
@@ -314,6 +327,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
+--- !u!114 &596717573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 596717568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793f47cd60e514b8ba3d122a9d214f47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &808822387
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,6 +349,7 @@ GameObject:
   - 23: {fileID: 808822390}
   - 33: {fileID: 808822389}
   - 114: {fileID: 808822388}
+  - 114: {fileID: 808822392}
   m_Layer: 0
   m_Name: Torus
   m_TagString: Untagged
@@ -395,6 +420,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
+--- !u!114 &808822392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 808822387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793f47cd60e514b8ba3d122a9d214f47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &963629358
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,6 +442,7 @@ GameObject:
   - 23: {fileID: 963629361}
   - 33: {fileID: 963629360}
   - 114: {fileID: 963629359}
+  - 114: {fileID: 963629363}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -424,9 +461,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22574e06ff8fe466497072276040ee31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numU: 30
-  numV: 30
-  amountToCutOff: 0.191
+  numU: 10
+  numV: 10
+  amountToCutOff: 0
 --- !u!33 &963629360
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -476,6 +513,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
+--- !u!114 &963629363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 963629358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793f47cd60e514b8ba3d122a9d214f47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1059161158
 GameObject:
   m_ObjectHideFlags: 0
@@ -487,6 +535,7 @@ GameObject:
   - 23: {fileID: 1059161161}
   - 33: {fileID: 1059161160}
   - 114: {fileID: 1059161159}
+  - 114: {fileID: 1059161163}
   m_Layer: 0
   m_Name: Disk
   m_TagString: Untagged
@@ -557,6 +606,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 9
+--- !u!114 &1059161163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1059161158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793f47cd60e514b8ba3d122a9d214f47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1073389660
 GameObject:
   m_ObjectHideFlags: 0
@@ -655,6 +715,7 @@ GameObject:
   - 23: {fileID: 1921300961}
   - 33: {fileID: 1921300960}
   - 114: {fileID: 1921300959}
+  - 114: {fileID: 1921300962}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -722,6 +783,17 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
+--- !u!114 &1921300962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1921300957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793f47cd60e514b8ba3d122a9d214f47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1990192810
 GameObject:
   m_ObjectHideFlags: 0
@@ -812,6 +884,7 @@ GameObject:
   - 23: {fileID: 2008878402}
   - 33: {fileID: 2008878401}
   - 114: {fileID: 2008878400}
+  - 114: {fileID: 2008878404}
   m_Layer: 0
   m_Name: Knot
   m_TagString: Untagged
@@ -881,3 +954,14 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
+--- !u!114 &2008878404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2008878399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793f47cd60e514b8ba3d122a9d214f47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

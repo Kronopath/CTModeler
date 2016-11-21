@@ -36,9 +36,28 @@ namespace CT {
                 Vector3 pv = f(inU, inV + divV / 200);
                 Vector3 nv = f(inU, inV - divV / 200);
 
+                // If either of the tangents are zero, that means we're at a singularity in the mesh.
+                // This would lead to a zero vector as our normal if left as-is.
+                // So, instead, take the tangent that's zero and replace it by another tangent along
+                // the other parametric axis that's a quarter of the way around the singularity.
+                if(pu == nu) {
+                    pu = f((inU + 0.25f) % 1.0f, inV + divV / 200);
+                    nu = f((inU + 0.25f) % 1.0f, inV - divV / 200);
+                }
+                if(pv == nv) {
+                    pv = f(inU + divU / 200, (inV + 0.25f) % 1.0f);
+                    nv = f(inU - divU / 200, (inV + 0.25f) % 1.0f);
+                }
+                // If they're both zero, then god help you, you're trying to model a black hole.
+                // Good luck with that.
+
                 Vector3 uTangent = (pu - nu).normalized;
                 Vector3 vTangent = (pv - nv).normalized;
-                Vector3 normal = Vector3.Cross(vTangent, uTangent);
+
+                Vector3 normal = Vector3.Cross(vTangent, uTangent).normalized;
+                if(normal == Vector3.zero) {
+                    Debug.LogError("Zero normal for " + this.gameObject.name + " at (" + inU + ", " + inV + "), tangents " + uTangent + ", " + vTangent);
+                }
 
                 tangents[currVertIndex] = uTangent;
                 normals[currVertIndex] = normal;
