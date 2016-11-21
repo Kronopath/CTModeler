@@ -11,7 +11,7 @@ namespace CT {
 
         public void Start() {
             meshFilter = GetComponent<MeshFilter>();
-    }
+        }
 
         public void OnDrawGizmosSelected() {
             Gizmos.color = Color.red;
@@ -22,6 +22,6 @@ namespace CT {
                                     vertexPos + transform.TransformVector(meshFilter.mesh.normals[i]));
                 }
             }
-    }
+        }
     }
 }
