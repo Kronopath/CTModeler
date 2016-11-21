@@ -17,7 +17,7 @@ namespace CT {
             float divU = 1.0f / numU;
             float divV = 1.0f / numV;
 
-            int numVertices = (numU + 1)*2 * numV + numV;
+            int numVertices = (numU + 1) * 2 * numV + numV;
             Vector3[] vertices = new Vector3[numVertices];
             Vector4[] tangents = new Vector4[numVertices];
             Vector3[] normals = new Vector3[numVertices];
@@ -28,7 +28,7 @@ namespace CT {
 
             Action<float, float> addVertex = (float inU, float inV) => {
                 // Compute parametric vertex
-                vertices[currVertIndex] = f(Mathf.Clamp01(inU), Mathf.Clamp01(inV));
+                vertices[currVertIndex] = f(Mathf.Clamp01(inU), Mathf.Clamp(inV, 0f, 0.999f));
 
                 // Approximate tangents via finite differencing
                 Vector3 pu = f(inU + divU / 200, inV);
@@ -50,12 +50,12 @@ namespace CT {
             float u = 0;
             float d = divU;
             // Zigzag across rows to form a triangle strip.
-            for (int j = 0; j < numV; j++) {
+            for(int j = 0; j < numV; j++) {
                 float v = j * divV;
-                for (int i = 0; i <= numU; i++) {
+                for(int i = 0; i <= numU; i++) {
                     addVertex(u, v);
                     addVertex(u, v + divV);
-                    if (i < numU) {
+                    if(i < numU) {
                         u += d;
                     }
                     else {
