@@ -9,7 +9,7 @@ namespace CT {
 
         protected abstract Vector3 ParametricFunction(float u, float v);
 
-        protected override Mesh CreateMesh() {
+        protected sealed override Mesh CreateMesh() {
             return CreateParametricSurface(numU, numV, ParametricFunction);
         }
 
