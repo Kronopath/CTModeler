@@ -43,10 +43,6 @@ namespace CT {
             }
             mesh.triangles = indexList;
 
-            foreach(Vector3 vertex in vertices) {
-                Debug.Log(vertex);
-            }
-
             return mesh;
         }
 
