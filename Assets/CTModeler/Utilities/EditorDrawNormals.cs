@@ -4,7 +4,7 @@ using System.Collections;
 namespace CT {
     /// <summary>
     /// Utility class that draws normals for an object in the editor when selected.
-    /// Meant for debugging.
+    /// Meant for debugging. Can be pretty slow.
     /// </summary>
     public class EditorDrawNormals : MonoBehaviour {
         private MeshFilter meshFilter;
