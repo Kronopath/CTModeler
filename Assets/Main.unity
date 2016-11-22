@@ -698,7 +698,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1073389660}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0, y: 3, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -715,6 +715,7 @@ GameObject:
   - 23: {fileID: 1314922690}
   - 33: {fileID: 1314922689}
   - 114: {fileID: 1314922688}
+  - 114: {fileID: 1314922692}
   m_Layer: 0
   m_Name: Cup
   m_TagString: Untagged
@@ -733,8 +734,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b023f1c539a9e46c4a885ff0e791cd1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numU: 15
-  numV: 15
+  numU: 16
+  numV: 64
 --- !u!33 &1314922689
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -755,7 +756,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: ef3ea4f181dd54fb8aeeb205431f3c1c, type: 2}
+  - {fileID: 2100000, guid: a20cb008441a34a21be24ea997bd2bc7, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
@@ -777,13 +778,24 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1314922687}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -1.94, y: 5.45, z: -0.1222671}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 9
+--- !u!114 &1314922692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1314922687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793f47cd60e514b8ba3d122a9d214f47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1921300957
 GameObject:
   m_ObjectHideFlags: 0
