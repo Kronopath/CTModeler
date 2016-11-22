@@ -8,18 +8,22 @@ namespace CT {
     /// </summary>
     public class EditorDrawNormals : MonoBehaviour {
         private MeshFilter meshFilter;
+        public bool shouldDraw = true;
 
         public void Start() {
             meshFilter = GetComponent<MeshFilter>();
         }
 
         public void OnDrawGizmosSelected() {
-            Gizmos.color = Color.red;
-            if(meshFilter && meshFilter.mesh) {
-                for(int i = 0; i < meshFilter.mesh.vertices.Length; i++) {
-                    Vector3 vertexPos = transform.TransformPoint(meshFilter.mesh.vertices[i]);
-                    Gizmos.DrawLine(vertexPos,
-                                    vertexPos + transform.TransformVector(meshFilter.mesh.normals[i]));
+            if(shouldDraw) {
+                Gizmos.color = Color.red;
+                if(meshFilter && meshFilter.mesh) {
+                    for(int i = 0; i < meshFilter.mesh.vertices.Length; i++) {
+                        Vector3 vertexPos = transform.TransformPoint(meshFilter.mesh.vertices[i]);
+                        Gizmos.DrawLine(
+                            vertexPos,
+                            vertexPos + transform.TransformVector(meshFilter.mesh.normals[i]));
+                    }
                 }
             }
         }
