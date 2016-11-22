@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace CT {
     public class Polyhedron : Shape {
@@ -17,34 +18,64 @@ namespace CT {
         public Vector3[] normals;
 
         protected override Mesh CreateMesh() {
+            List<Vector3> finalVertexList = new List<Vector3>();
+            List<Vector3> finalNormalList = new List<Vector3>();
+            List<Vector4> finalTangentList = new List<Vector4>();
+            List<Vector2> finalUVList = new List<Vector2>();
+            int parity = 1;
+
+            foreach(Triangle tri in triangles) {
+                AddTriangle(tri, parity, finalVertexList, finalNormalList,
+                            finalTangentList, finalUVList);
+                parity = 1 - parity;
+            }
+
             Mesh mesh = new Mesh();
 
-            mesh.vertices = vertices;
+            mesh.vertices = finalVertexList.ToArray();
+            mesh.normals = finalNormalList.ToArray();
+            mesh.tangents = finalTangentList.ToArray();
+            mesh.uv = finalUVList.ToArray();
 
-            int[] flatTriangles = new int[triangles.Length * 3];
-            for(int i = 0; i < triangles.Length; i++) {
-                flatTriangles[i * 3] = triangles[i].v1;
-                flatTriangles[i * 3 + 1] = triangles[i].v2;
-                flatTriangles[i * 3 + 2] = triangles[i].v3;
+            int[] indexList = new int[triangles.Length*3];
+            for (int i = 0; i < indexList.Length; i++) {
+                indexList[i] = i;
             }
-            mesh.triangles = flatTriangles;
+            mesh.triangles = indexList;
 
-            if (normals.Length == vertices.Length) {
-                mesh.normals = normals;
-                for (int i = 0; i < mesh.normals.Length; i++) {
-                    mesh.normals[i] = mesh.normals[i].normalized;
-                }
-            }
-            else {
-                if (normals.Length > 0) {
-                    Debug.LogError(gameObject.name + ".Polyhedron: Number of normals ("
-                                   + normals.Length + ") does not match number of vertices ("
-                                   + vertices.Length + ").");
-                }
+            foreach(Vector3 vertex in vertices) {
+                Debug.Log(vertex);
             }
 
-            // TODO: normals and UVs
             return mesh;
+        }
+
+        private void AddTriangle(Triangle t, int parity,
+                                 List<Vector3> vertexListToAddTo, List<Vector3> normalListToAddTo,
+                                 List<Vector4> tangentListToAddTo, List<Vector2> uvListToAddTo)
+        {
+            Vector3 a = vertices[t.v1];
+            Vector3 b = vertices[t.v2];
+            Vector3 c = vertices[t.v3];
+            Vector4 tangent = (b - a).normalized;
+            Vector3 genNormal = Vector3.Cross(tangent, c - b).normalized;
+
+            vertexListToAddTo.Add(a);
+            vertexListToAddTo.Add(b);
+            vertexListToAddTo.Add(c);
+
+            int n = normalListToAddTo.Count;
+            normalListToAddTo.Add(normals.Length > n ? normals[n].normalized : genNormal);
+            normalListToAddTo.Add(normals.Length > n+1 ? normals[n+1].normalized : genNormal);
+            normalListToAddTo.Add(normals.Length > n+2 ? normals[n+2].normalized : genNormal);
+
+            tangentListToAddTo.Add(tangent);
+            tangentListToAddTo.Add(tangent);
+            tangentListToAddTo.Add(tangent);
+
+            uvListToAddTo.Add(new Vector2(parity, parity));
+            uvListToAddTo.Add(new Vector2(parity, 1 - parity));
+            uvListToAddTo.Add(new Vector2(1 - parity, 1 - parity));
         }
     }
 }
