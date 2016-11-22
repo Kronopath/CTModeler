@@ -10,10 +10,6 @@ namespace CT {
         protected abstract Vector3 ParametricFunction(float u, float v);
 
         protected sealed override Mesh CreateMesh() {
-            return CreateParametricSurface(numU, numV, ParametricFunction);
-        }
-
-        protected Mesh CreateParametricSurface(int numU, int numV, Func<float, float, Vector3> f) {
             float divU = 1.0f / numU;
             float divV = 1.0f / numV;
 
@@ -28,16 +24,16 @@ namespace CT {
 
             Action<float, float> addVertex = (float inU, float inV) => {
                 // Compute parametric vertex
-                vertices[currVertIndex] = f(Mathf.Clamp01(inU), Mathf.Clamp01(inV));
+                vertices[currVertIndex] = ParametricFunction(Mathf.Clamp01(inU), Mathf.Clamp01(inV));
 
                 Vector3 uTangent = Vector3.zero;
                 Vector3 vTangent = Vector3.zero;
                 Vector3 normal = Vector3.zero;
-                GetNormalAndTangents(f, inU, inV, divU, divV, out uTangent, out vTangent, out normal);
+                GetNormalAndTangents(inU, inV, divU, divV, out uTangent, out vTangent, out normal);
 
                 if(normal == Vector3.zero) {
                     // We're likely at a singularity or pole in the model. 
-                    normal = GetNormalAtSingularity(f, inU, inV, divU, divV);
+                    normal = GetNormalAtSingularity(inU, inV, divU, divV);
                 }
 
                 tangents[currVertIndex] = uTangent;
@@ -75,8 +71,7 @@ namespace CT {
             return mesh;
         }
 
-        private Vector3 GetNormalAtSingularity(Func<float, float, Vector3> f,
-                                               float inU, float inV, float divU, float divV)
+        private Vector3 GetNormalAtSingularity(float inU, float inV, float divU, float divV)
         {
             // Take the normal at four different points nearby this vertex, then average them.
             Vector2[] nearbyPoints = {
@@ -94,8 +89,7 @@ namespace CT {
                 Vector3 uTangent = Vector3.zero;
                 Vector3 vTangent = Vector3.zero;
                 Vector3 normal = Vector3.zero;
-                GetNormalAndTangents(f, currU, currV, divU, divV, out uTangent, out vTangent,
-                                     out normal);
+                GetNormalAndTangents(currU, currV, divU, divV, out uTangent, out vTangent, out normal);
 
                 averageNormal = averageNormal * i / (i + 1) + normal / (i + 1);
             }
@@ -103,16 +97,15 @@ namespace CT {
             return averageNormal.normalized;
         }
 
-        private void GetNormalAndTangents(Func<float, float, Vector3> f,
-                                          float inU, float inV, float divU, float divV,
+        private void GetNormalAndTangents(float inU, float inV, float divU, float divV,
                                           out Vector3 uTangent, out Vector3 vTangent,
                                           out Vector3 normal)
         {
             // Approximate tangents via finite differencing
-            Vector3 pu = f(inU + divU / 200, inV);
-            Vector3 nu = f(inU - divU / 200, inV);
-            Vector3 pv = f(inU, inV + divV / 200);
-            Vector3 nv = f(inU, inV - divV / 200);
+            Vector3 pu = ParametricFunction(inU + divU / 200, inV);
+            Vector3 nu = ParametricFunction(inU - divU / 200, inV);
+            Vector3 pv = ParametricFunction(inU, inV + divV / 200);
+            Vector3 nv = ParametricFunction(inU, inV - divV / 200);
 
             uTangent = (pu - nu).normalized;
             vTangent = (pv - nv).normalized;
