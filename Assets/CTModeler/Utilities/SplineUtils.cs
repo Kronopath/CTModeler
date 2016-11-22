@@ -62,7 +62,7 @@ namespace CT {
             for(int n = 0; n < keys.Count - 1; n++) {
                 for(int i = 0; i < segmentsPerKey; i++) {
                     spline.Add(hermite(keys[n], D[n] * 0.9f, keys[n + 1], D[n + 1] * 0.9f,
-                                       i / segmentsPerKey));
+                                       (float)i / segmentsPerKey));
                 }
             }
             spline.Add(keys[keys.Count - 1]);
