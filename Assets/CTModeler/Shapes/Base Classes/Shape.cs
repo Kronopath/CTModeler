@@ -5,12 +5,12 @@ namespace CT {
     
     [RequireComponent(typeof(MeshFilter))]
     [RequireComponent(typeof(MeshRenderer))]
+    [ExecuteInEditMode]
     public abstract class Shape : MonoBehaviour {
 
         // Use this for initialization
         public virtual void Start() {
-            MeshFilter meshFilter = GetComponent<MeshFilter>();
-            meshFilter.mesh = CreateMesh();
+            RegenerateMesh();
         }
 	
         // Update is called once per frame
@@ -34,6 +34,11 @@ namespace CT {
                 }
             }
             return tris;
+        }
+
+        public void RegenerateMesh() {
+            MeshFilter meshFilter = GetComponent<MeshFilter>();
+            meshFilter.mesh = CreateMesh();
         }
     }
 }
