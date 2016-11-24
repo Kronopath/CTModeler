@@ -5,8 +5,9 @@ namespace CT {
     
     [RequireComponent(typeof(MeshFilter))]
     [RequireComponent(typeof(MeshRenderer))]
-    [ExecuteInEditMode]
     public abstract class Shape : MonoBehaviour {
+
+        public bool liveUpdatingInEditor = true;
 
         // Use this for initialization
         public virtual void Start() {
@@ -34,6 +35,12 @@ namespace CT {
                 }
             }
             return tris;
+        }
+
+        public void OnValidate() {
+            if(liveUpdatingInEditor) {
+                RegenerateMesh();
+            }
         }
 
         public void RegenerateMesh() {
