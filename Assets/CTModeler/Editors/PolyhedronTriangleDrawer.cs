@@ -7,13 +7,14 @@ namespace CT {
     public class PolyhedronTriangleDrawer : PropertyDrawer {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
             using(var pScope = new EditorGUI.PropertyScope(position, label, property)) {
-                
-                position = EditorGUI.IndentedRect(position);
+                position = EditorGUI.PrefixLabel(
+                    position, GUIUtility.GetControlID(FocusType.Passive), label);
+
                 int indentLevel = EditorGUI.indentLevel;
                 EditorGUI.indentLevel = 0;
 
                 float width = position.width / 3f;
-                float labelWidth = 30f;
+                float labelWidth = 20f;
 
                 FieldWithLabel(new Rect(position.x, position.y, width, position.height),
                                "V1", labelWidth, property.FindPropertyRelative("v1"));
