@@ -14,7 +14,9 @@ namespace CT {
 
         public Vector3[] vertices;
         public Triangle[] triangles;
-        // TODO: add to name in inspector, call it "optional"
+
+        [Label("<b>Note:</b> The Normals array is optional.\n"+
+               "If no normals are supplied, they will be auto-generated.")]
         public Vector3[] normals;
 
         protected override Mesh CreateMesh() {

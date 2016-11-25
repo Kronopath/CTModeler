@@ -4,7 +4,8 @@ using System.Collections;
 namespace CT {
     public class OpenCylinder : Revolved {
 
-        // TODO: write custom editor that only shows num segments and hides numU and numV
+        [Label("<b>NOTE:</b> Don't change Num U and Num V above.\n" +
+        "This object will automatically set them to appropriate values based on Num Segments.")]
         public int numSegments = 10;
 
         public override void Start() {
