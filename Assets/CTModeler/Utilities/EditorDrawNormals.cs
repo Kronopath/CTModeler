@@ -7,30 +7,34 @@ namespace CT {
     /// Meant for debugging. Can be pretty slow.
     /// </summary>
     public class EditorDrawNormals : MonoBehaviour {
-        private MeshFilter meshFilter;
         public bool shouldDraw = true;
 
-        public void Start() {
-            meshFilter = GetComponent<MeshFilter>();
-        }
+        private MeshFilter meshFilter;
 
         public void OnDrawGizmosSelected() {
             if(shouldDraw) {
                 Gizmos.color = Color.red;
+                if (meshFilter == null) {
+                    meshFilter = GetComponent<MeshFilter>();
+                }
                 if(meshFilter != null
-                   && meshFilter.mesh != null
-                   && meshFilter.mesh.normals != null
-                   && meshFilter.mesh.vertices != null
-                   && meshFilter.mesh.normals.Length == meshFilter.mesh.vertices.Length)
+                   && meshFilter.sharedMesh != null
+                   && meshFilter.sharedMesh.normals != null
+                   && meshFilter.sharedMesh.vertices != null
+                   && meshFilter.sharedMesh.normals.Length == meshFilter.sharedMesh.vertices.Length)
                 {
-                    for(int i = 0; i < meshFilter.mesh.vertices.Length; i++) {
-                        Vector3 vertexPos = transform.TransformPoint(meshFilter.mesh.vertices[i]);
+                    for(int i = 0; i < meshFilter.sharedMesh.vertices.Length; i++) {
+                        Vector3 vertexPos = transform.TransformPoint(meshFilter.sharedMesh.vertices[i]);
                         Gizmos.DrawLine(
                             vertexPos,
-                            vertexPos + transform.TransformVector(meshFilter.mesh.normals[i]));
+                            vertexPos + transform.TransformVector(meshFilter.sharedMesh.normals[i]));
                     }
                 }
             }
+        }
+
+        public void OnValidate() {
+            meshFilter = GetComponent<MeshFilter>();
         }
     }
 }
