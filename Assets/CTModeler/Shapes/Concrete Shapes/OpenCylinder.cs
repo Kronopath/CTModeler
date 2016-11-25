@@ -10,13 +10,17 @@ namespace CT {
         public int numSegments = 10;
 
         public override void Start() {
-            numU = numSegments;
-            numV = 1;
             base.Start();
         }
 
         protected override Vector2 RevolutionFunction(float t) {
             return new Vector2(1, 2 * t - 1);
+        }
+
+        public override void OnValidate() {
+            numU = numSegments;
+            numV = 1;
+            base.OnValidate();
         }
     }
 }
