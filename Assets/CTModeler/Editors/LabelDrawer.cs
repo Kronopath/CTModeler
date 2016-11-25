@@ -3,6 +3,16 @@ using UnityEditor;
 using System.Collections;
 
 namespace CT {
+    /// <summary>
+    /// Add this attribute to a public variable on a MonoBehaviour to allow for text to be
+    /// printed above the variable in the Unity inspector. Supports Unity's limited rich text
+    /// subset of HTML.
+    /// 
+    /// Example usage:
+    /// 
+    /// [Label("This text will be shown above Num Things in the inspector")]
+    /// public int numThings;
+    /// </summary>
     public class Label : PropertyAttribute {
         public string text;
 
@@ -11,6 +21,9 @@ namespace CT {
         }
     }
 
+    /// <summary>
+    /// Decorator drawer that takes care of actually drawing the text from the above Label attribute.
+    /// </summary>
     [CustomPropertyDrawer(typeof(Label))]
     public class LabelDrawer : DecoratorDrawer {
 

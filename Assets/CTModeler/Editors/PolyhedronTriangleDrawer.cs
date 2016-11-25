@@ -3,6 +3,10 @@ using UnityEditor;
 using System.Collections;
 
 namespace CT {
+    /// <summary>
+    /// Custom editor that draws the Triangles in a polyhedron a bit nicer and all in one line in the
+    /// inspector, similar to the way Unity draws Vector3s.
+    /// </summary>
     [CustomPropertyDrawer(typeof(Polyhedron.Triangle))]
     public class PolyhedronTriangleDrawer : PropertyDrawer {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {

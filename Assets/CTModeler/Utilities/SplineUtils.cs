@@ -4,8 +4,16 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace CT {
+    /// <summary>
+    /// A utility for creating, and sampling from, spline curves.
+    /// </summary>
     public static class SplineUtils {
 
+        /// <summary>
+        /// Given a list of control points, generates a smooth path that passes through them.
+        /// </summary>
+        /// <returns>An array of Vector3s that trace the path of the spline.</returns>
+        /// <param name="keys">A list of key points that the spline should pass through in order.</param>
         public static List<Vector3> MakeSpline(List<Vector3> keys) {
             List<Vector3> spline = new List<Vector3>();
 
@@ -57,8 +65,17 @@ namespace CT {
             return spline;
         }
 
-        // TODO DOC THIS
-        // t should be between 0 and 1!
+        /// <summary>
+        /// Samples a value from a curve.
+        /// </summary>
+        /// <returns>Either the closest point from the input array, or a linear interpolation
+        /// between the two closest points.</returns>
+        /// <param name="points">A set of points defining a curve. The more points there are,
+        /// the smoother the sampling will be. All points are assumed to be equal "distance" apart in
+        /// the parametric axis t.</param>
+        /// <param name="t">The parameter for how far along the curve we are.
+        /// Must be between 0 and 1, with 0 being the beginning of the curve and 1 being the end.
+        /// </param>
         public static Vector3 Sample(List<Vector3> points, float t) {
             t = Mathf.Clamp(t, 0, 0.999f);
             if(points.Count < 1) {

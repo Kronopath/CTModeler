@@ -3,6 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace CT {
+    /// <summary>
+    /// A wine-glass shape created from a spline surface. Also an example of how you can use
+    /// SplineUtils to make a revolved object.
+    /// </summary>
     public class Cup : Revolved {
         private List<Vector3> spline = SplineUtils.MakeSpline(
             new List<Vector3> {

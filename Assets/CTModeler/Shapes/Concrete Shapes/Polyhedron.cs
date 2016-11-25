@@ -4,7 +4,15 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace CT {
+    /// <summary>
+    /// This class implements a polyhedron shape, defined by a set of manually-specified vertices.
+    /// This is somewhat analogous to Unity's Mesh class, except that this does the benefit of
+    /// automatically generating some sensible UVs and optionally generating normals for the mesh.
+    /// </summary>
     public class Polyhedron : Shape {
+        /// <summary>
+        /// A helper class that defines a triangle as three vertex indices.
+        /// </summary>
         [Serializable]
         public class Triangle {
             public int v1;
@@ -12,11 +20,24 @@ namespace CT {
             public int v3;
         }
 
+        /// <summary>
+        /// The list of all vertices in the mesh.
+        /// </summary>
         public Vector3[] vertices;
+        /// <summary>
+        /// All triangles in the mesh, specified as the indices of all the vertices.
+        /// </summary>
         public Triangle[] triangles;
 
         [Label("<b>Note:</b> The Normals array is optional.\n"+
                "If no normals are supplied, they will be auto-generated.")]
+        /// <summary>
+        /// An array containing the normals of all the vertices. Note that these correspond to the
+        /// order they're in on the triangles array, not the vertices array, so that you can, for 
+        /// example, only enter 8 vertices for a cube but still have each face of the cube have distinct
+        /// normals. Thus, the size of this array should be three times the size of the triangles array.
+        /// If this array is empty this class will attempt to generate normals for the mesh.
+        /// </summary>
         public Vector3[] normals;
 
         protected override Mesh CreateMesh() {

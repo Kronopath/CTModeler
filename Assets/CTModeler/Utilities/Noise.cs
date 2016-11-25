@@ -3,8 +3,16 @@ using System;
 using System.Collections;
 
 namespace CT {
+    /// <summary>
+    /// Random noise utility.
+    /// </summary>
     public static class Noise {
-
+        /// <summary>
+        /// Gets smooth noise in 3D space.
+        /// </summary>
+        /// <returns>The value of the noise at the given location.</returns>
+        /// <param name="P">The position in 3D space that you want to sample the noise values at.
+        /// </param>
         public static float GetNoise(Vector3 P) {
             Func<Vector4, Vector4> floor = v => MapV4(v, Mathf.Floor);
             Func<Vector4, Vector4> mod289 = v => MapV4(v, x => x % 289.0f);

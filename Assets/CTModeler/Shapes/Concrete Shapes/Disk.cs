@@ -2,11 +2,17 @@
 using System.Collections;
 
 namespace CT {
+    /// <summary>
+    /// A simple, flat, circular disk.
+    /// </summary>
     public class Disk : Revolved {
         
         [Label("<b>NOTE:</b> Don't change Num U and Num V above.\n" +
                "This object will automatically set them to\n" +
                "appropriate values based on Num Segments.")]
+        /// <summary>
+        /// The number of triangles/wedges this disk should be built of.
+        /// </summary>
         public int numSegments = 10;
 
         public override void Start() {

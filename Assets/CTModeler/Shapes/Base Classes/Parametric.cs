@@ -3,10 +3,25 @@ using System;
 using System.Collections;
 
 namespace CT {
+    /// <summary>
+    /// Base class for a shape defined by a parametric function.
+    /// </summary>
     public abstract class Parametric : Shape {
+        /// <summary>
+        /// The number of triangles to have along the direction of the U parameter.
+        /// </summary>
         public int numU = 30;
+        /// <summary>
+        /// The number of triangles to have along the direction of the V parameter.
+        /// </summary>
         public int numV = 30;
 
+        /// <summary>
+        /// Override this function to implement the parametric function that defines this mesh.
+        /// </summary>
+        /// <returns>The surface of the mesh at the given U and V parametric coordinates.</returns>
+        /// <param name="u">The first parametric coordinate, varies between 0 and 1.</param>
+        /// <param name="v">The second parametric coordinate, varies between 0 and 1.</param>
         protected abstract Vector3 ParametricFunction(float u, float v);
 
         protected sealed override Mesh CreateMesh() {
@@ -71,6 +86,19 @@ namespace CT {
             return mesh;
         }
 
+        /// <summary>
+        /// If you're at a pole in the model, like the ends of a sphere, you can't take the 
+        /// cross product of the two tangents to get the normal, because varying one of the
+        /// parametric directions leaves you at the same location in 3D space, leading one of
+        /// the tangents to be zero when attempting to calculate them by finite differencing.
+        /// To remedy this, we take the normals at 4 points near the pole and average them, to try
+        /// and get an approximation of the normal.
+        /// </summary>
+        /// <returns>An approximation of the normal at the singularity.</returns>
+        /// <param name="inU">U parametric coordinate.</param>
+        /// <param name="inV">V parametric coordinate.</param>
+        /// <param name="divU">The spacing between vertices along the U axis.</param>
+        /// <param name="divV">The spacing between vertices along the V axis.</param>
         private Vector3 GetNormalAtSingularity(float inU, float inV, float divU, float divV)
         {
             // Take the normal at four different points nearby this vertex, then average them.
@@ -97,6 +125,16 @@ namespace CT {
             return averageNormal.normalized;
         }
 
+        /// <summary>
+        /// Gets the normal and tangents of the surface at the given parametric coordinates.
+        /// </summary>
+        /// <param name="inU">U parametric coordinate.</param>
+        /// <param name="inV">V parametric coordinate.</param>
+        /// <param name="divU">The spacing between vertices along the U axis.</param>
+        /// <param name="divV">The spacing between vertices along the V axis.</param>
+        /// <param name="uTangent">Gets set to the tangent in the u direction.</param>
+        /// <param name="vTangent">Gets set to the tangent in the v direction.</param>
+        /// <param name="normal">Gets set to the normal vector.</param>
         private void GetNormalAndTangents(float inU, float inV, float divU, float divV,
                                           out Vector3 uTangent, out Vector3 vTangent,
                                           out Vector3 normal)

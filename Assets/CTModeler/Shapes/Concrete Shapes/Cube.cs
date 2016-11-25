@@ -2,7 +2,9 @@
 using System.Collections;
 
 namespace CT {
-    
+    /// <summary>
+    /// A basic 2x2x2 axis-aligned cube.
+    /// </summary>
     public class Cube : Shape {
         protected override Mesh CreateMesh() {
             Vector3[] vertices = new Vector3[6 * 4];

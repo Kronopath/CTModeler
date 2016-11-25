@@ -2,6 +2,9 @@
 using System.Collections;
 
 namespace CT {
+    /// <summary>
+    /// A fancy-looking loopy extruded surface.
+    /// </summary>
     public class Knot : Extruded {
 
         private const float TAU = 2 * Mathf.PI;
